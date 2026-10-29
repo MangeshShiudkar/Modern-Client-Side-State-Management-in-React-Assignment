@@ -1,9 +1,128 @@
 {
-"products": [
-{ "id": "p1", "name": "Mechanical Keyboard", "price": 120 },
-{ "id": "p2", "name": "Wireless Ergonomic Mouse", "price": 55 },
-{ "id": "p3", "name": "USB-C Multiport Adapter", "price": 35 },
-{ "id": "p4", "name": "Ultra-Wide Monitor Light Bar", "price": 75 }
-],
-"orders": []
+  "products": [
+    {
+      "id": "p1",
+      "name": "Mechanical Keyboard",
+      "price": 120
+    },
+    {
+      "id": "p2",
+      "name": "Wireless Ergonomic Mouse",
+      "price": 55
+    },
+    {
+      "id": "p3",
+      "name": "USB-C Multiport Adapter",
+      "price": 35
+    },
+    {
+      "id": "p4",
+      "name": "Ultra-Wide Monitor Light Bar",
+      "price": 75
+    }
+  ],
+  "orders": [
+    {
+      "items": [
+        {
+          "id": "p1",
+          "name": "Mechanical Keyboard",
+          "price": 120,
+          "qty": 1
+        },
+        {
+          "id": "p2",
+          "name": "Wireless Ergonomic Mouse",
+          "price": 55,
+          "qty": 1
+        }
+      ],
+      "total": 175,
+      "id": 1
+    },
+    {
+      "items": [
+        {
+          "id": "p2",
+          "name": "Wireless Ergonomic Mouse",
+          "price": 55,
+          "qty": 4
+        },
+        {
+          "id": "p1",
+          "name": "Mechanical Keyboard",
+          "price": 120,
+          "qty": 2
+        },
+        {
+          "id": "p3",
+          "name": "USB-C Multiport Adapter",
+          "price": 35,
+          "qty": 1
+        },
+        {
+          "id": "p4",
+          "name": "Ultra-Wide Monitor Light Bar",
+          "price": 75,
+          "qty": 1
+        }
+      ],
+      "total": 570,
+      "id": 2
+    },
+    {
+      "items": [
+        {
+          "id": "p3",
+          "name": "USB-C Multiport Adapter",
+          "price": 35,
+          "qty": 1
+        },
+        {
+          "id": "p2",
+          "name": "Wireless Ergonomic Mouse",
+          "price": 55,
+          "qty": 1
+        }
+      ],
+      "total": 90,
+      "id": 3
+    },
+    {
+      "items": [
+        {
+          "id": "p1",
+          "name": "Mechanical Keyboard",
+          "price": 120,
+          "qty": 2
+        },
+        {
+          "id": "p2",
+          "name": "Wireless Ergonomic Mouse",
+          "price": 55,
+          "qty": 2
+        }
+      ],
+      "total": 350,
+      "id": 4
+    },
+    {
+      "items": [
+        {
+          "id": "p1",
+          "name": "Mechanical Keyboard",
+          "price": 120,
+          "qty": 3
+        },
+        {
+          "id": "p2",
+          "name": "Wireless Ergonomic Mouse",
+          "price": 55,
+          "qty": 1
+        }
+      ],
+      "total": 415,
+      "id": 5
+    }
+  ]
 }
