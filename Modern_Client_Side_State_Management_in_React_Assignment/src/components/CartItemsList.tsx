@@ -1,7 +1,9 @@
 import { useShallow } from 'zustand/react/shallow'
+import { CheckoutContext } from '../checkout/CheckoutContext'
 import { useCartStore } from '../stores/cartStore'
 
 function CartItemsList() {
+  const isSubmitting = CheckoutContext.useSelector((snapshot) => snapshot.matches('submitting'))
   const { items, removeItem } = useCartStore(
     useShallow((state) => ({ items: state.items, removeItem: state.removeItem })),
   )
@@ -22,7 +24,8 @@ function CartItemsList() {
             <p className="mt-1 text-sm font-semibold">${(item.price * item.qty).toFixed(2)}</p>
           </div>
           <button
-            className="text-sm font-medium text-red-700 underline decoration-red-300 underline-offset-2 hover:text-red-900"
+            className="text-sm font-medium text-red-700 underline decoration-red-300 underline-offset-2 hover:text-red-900 disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={isSubmitting}
             onClick={() => removeItem(item.id)}
             type="button"
           >

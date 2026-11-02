@@ -1,21 +1,15 @@
 import { create } from 'zustand'
-import type { CartItem, CheckoutResult, Product } from '../types'
-
-export type CheckoutStatus = 'idle' | 'submitting' | 'success' | 'error'
+import type { CartItem, Product } from '../types'
 
 interface CartStore {
   items: CartItem[]
-  checkoutStatus: CheckoutStatus
-  checkoutError: string | null
   addItem: (product: Product) => void
   removeItem: (id: string) => void
-  checkout: () => Promise<CheckoutResult>
+  clear: () => void
 }
 
-export const useCartStore = create<CartStore>()((set, get) => ({
+export const useCartStore = create<CartStore>()((set) => ({
   items: [],
-  checkoutStatus: 'idle',
-  checkoutError: null,
   addItem: (product) =>
     set((state) => {
       const existingItem = state.items.find((item) => item.id === product.id)
@@ -25,16 +19,10 @@ export const useCartStore = create<CartStore>()((set, get) => ({
           items: state.items.map((item) =>
             item.id === product.id ? { ...item, qty: item.qty + 1 } : item,
           ),
-          checkoutStatus: state.checkoutStatus === 'submitting' ? 'submitting' : 'idle',
-          checkoutError: null,
         }
       }
 
-      return {
-        items: [...state.items, { ...product, qty: 1 }],
-        checkoutStatus: state.checkoutStatus === 'submitting' ? 'submitting' : 'idle',
-        checkoutError: null,
-      }
+      return { items: [...state.items, { ...product, qty: 1 }] }
     }),
   removeItem: (id) =>
     set((state) => {
@@ -44,45 +32,9 @@ export const useCartStore = create<CartStore>()((set, get) => ({
         return state
       }
 
-      return {
-        items,
-        checkoutStatus: state.checkoutStatus === 'submitting' ? 'submitting' : 'idle',
-        checkoutError: null,
-      }
+      return { items }
     }),
-  checkout: async () => {
-    const { items } = get()
-
-    if (items.length === 0) {
-      const message = 'Add at least one item before checkout.'
-      set({ checkoutStatus: 'error', checkoutError: message })
-      throw new Error(message)
-    }
-
-    const total = items.reduce((sum, item) => sum + item.price * item.qty, 0)
-    set({ checkoutStatus: 'submitting', checkoutError: null })
-
-    try {
-      const response = await fetch('/api/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items, total }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Unable to complete checkout. Please try again.')
-      }
-
-      const order = (await response.json()) as CheckoutResult
-      set({ items:[],checkoutStatus: 'success', checkoutError: null })
-      return order
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : 'Unable to complete checkout. Please try again.'
-      set({ checkoutStatus: 'error', checkoutError: message })
-      throw error
-    }
-  },
+  clear: () => set({ items: [] }),
 }))
 
 export const selectCartItemCount = (state: CartStore) =>
